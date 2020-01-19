@@ -7,6 +7,7 @@ from flask import Flask
 
 from flaskr.db import db
 from flaskr.models import migrate
+from flaskr.views import simple_page
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -26,9 +27,5 @@ def create_app(test_config=None):
 
     db.init_app(app)
     migrate.init_app(app, db)
-
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
-
+    app.register_blueprint(simple_page, url_prefix='/pages')
     return app
